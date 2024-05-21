@@ -1,12 +1,9 @@
 import React from 'react';
-import './Template.css';
+import styled from 'styled-components';
 
 const Template = () => {
 
-    return (
-        <>
-        </>
-    )
-};
+    return 
+}
 
 export default Template;
