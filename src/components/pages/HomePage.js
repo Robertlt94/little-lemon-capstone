@@ -1,21 +1,36 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Link} from 'react-router-dom';
 import Header from '../Header';
+import Button from '../Button';
+import OrderForDelivery from './OrderForDelivery';
+import MenuItems from './MenuItems';
 
 const HomePage = () => {
 
     return (
         <div>
             <Header />
-            <div>
-                <h1>Little Lemon</h1>
-                <h2>Chicago</h2>
+            <Greeting>
+                <RestaurantName>Little Lemon</RestaurantName>
+                <h4>Chicago, United States</h4>
                 <p>We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.</p>
-                <Link to="/reserve-a-table" >Reserve</Link>
-            </div>
+                <Button type="button" path="/reserve-a-table" label="Reserve" />
+            </Greeting>
+            <OrderForDelivery />
+            <MenuItems />
         </div>
     )
 };
 
 export default HomePage;
+
+const Greeting = styled.div`
+    background-color: #495E57;
+    color: #fff;
+    padding: 5vh 5vw;
+    font-size: 2rem;
+`
+
+const RestaurantName = styled.h1`
+    color: #F4CE14;
+`

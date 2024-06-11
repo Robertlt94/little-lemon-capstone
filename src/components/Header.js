@@ -26,4 +26,5 @@ export default Header;
 const Wrapper = styled.div`
     display: flex;
     width: 100vw;
+    margin: 2vh 5vw;
 `

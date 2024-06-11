@@ -3,17 +3,20 @@ import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 import Header from '../Header';
 import HelpIcon from '@mui/icons-material/Help';
+import Button from '../Button';
+import BookingForm from '../BookingForm';
 
-const ReservationDetailsPage = ({date, availability, handleDateChange, handleSeniorChange}) => {
+const ReservationDetailsPage = ({date, setDate                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }) => {
 
     return (
         <div>
             <Header />
             <PageDescription>
                 <Page>Reservation Details</Page>
-                <p>Please provide us with the information below to help us prepare for your reservation. <br /> NOTICE: Reservations are only available on the day of and 4 business days ahead.</p>
+                <p>Please provide us with the information below to help us prepare for your reservation.</p>
             </PageDescription>
-            <FormContainer>
+            <BookingForm date={date} setDate={setDate} />
+            {/* <FormContainer>
                 <label>Date:</label>
                 <input type="date" min="2024-05-21" max="2024-05-25" value={date} onChange={(e)=>handleDateChange(e)} />
                 <p>Party Size:</p>
@@ -26,7 +29,7 @@ const ReservationDetailsPage = ({date, availability, handleDateChange, handleSen
                 <Frame>
                     <legend>Available Reservation Times (Select One)</legend>
                     <TimeSlots>
-                    {availability.filter(table => table.reserved === false).map((table, index) => {
+                    {availability[0].times.filter(table => table.reserved === false).map((table, index) => {
                         return (
                             <AvailableTimes key={index} >
                                 <input type="radio" id="time" name="time" value={table.time}/>
@@ -36,12 +39,12 @@ const ReservationDetailsPage = ({date, availability, handleDateChange, handleSen
                     })}
                     </TimeSlots>
                 </Frame>
-                <button type="submit"><Link to="/reserve-a-table/confirmation" >Next</Link></button>
-            </FormContainer>
+                <NextButton type="button" path="/reserve-a-table/confirmation" label="Next" />
+            </FormContainer> */}
+            <img src='../assets/images/logo1.jpg' />
         </div>
     )
 };
-
 export default ReservationDetailsPage;
 
 const PageDescription = styled.div`
@@ -66,8 +69,11 @@ const Frame = styled.fieldset`
 
 const TimeSlots = styled.ul`
     list-style: none;
-    columns: 3;
     text-align: center;
+    width: 70vw;
+    display: grid;
+    grid-template: repeat(2, 1fr) / repeat(4, 1fr);
+    row-gap: 5vh;
 `
 
 const AvailableTimes = styled.li`
@@ -79,8 +85,10 @@ const AvailableTimes = styled.li`
     width: max-content;
     margin-left: auto;
     margin-right: auto;
-    &:checked {
+        &:checked {
         background-color: #967C00;
         color: #fff;
     }
+`
+const NextButton = styled(Button)`
 `
