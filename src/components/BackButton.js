@@ -18,10 +18,7 @@ export default BackButton;
 const Button = styled.button`
     background-color: transparent;
     display: flex;
-    padding: 1rem;
-    margin: 1rem;
     border: none;
-    flex: auto;
 `
 
 const BackText = styled.p`

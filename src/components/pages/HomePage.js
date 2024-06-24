@@ -1,4 +1,5 @@
 import React from 'react';
+import {useLocation} from 'react-router-dom';
 import styled from 'styled-components';
 import Header from '../Header';
 import Button from '../Button';
@@ -6,6 +7,11 @@ import OrderForDelivery from './OrderForDelivery';
 import MenuItems from './MenuItems';
 
 const HomePage = () => {
+    const location = useLocation();
+
+    const toReservationDetails = () => {
+        window.location = "/reserve-a-table";
+    }
 
     return (
         <div>
@@ -14,7 +20,7 @@ const HomePage = () => {
                 <RestaurantName>Little Lemon</RestaurantName>
                 <h4>Chicago, United States</h4>
                 <p>We are a family owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.</p>
-                <Button type="button" path="/reserve-a-table" label="Reserve" />
+                <Button type="button" path="/reserve-a-table" label="Reserve" doThis={toReservationDetails} />
             </Greeting>
             <OrderForDelivery />
             <MenuItems />

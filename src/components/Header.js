@@ -16,7 +16,7 @@ const Header = () => {
                 :
                 <BackButton />
             }
-            {location.pathname !== ("/reserve-a-table" || "/reserve-a-table/confirmation" || "/thank-you") && <CartIcon />}
+            {location.pathname === "/" && <CartIcon />}
         </Wrapper>
     )
 };
@@ -25,6 +25,6 @@ export default Header;
 
 const Wrapper = styled.div`
     display: flex;
-    width: 100vw;
+    width: max-content;
     margin: 2vh 5vw;
 `
