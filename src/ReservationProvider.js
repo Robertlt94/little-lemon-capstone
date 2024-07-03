@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import ReservationContext from './ReservationContext';
 
 const ReservationProvider = ({children}) => {
-    const [confirmedResrvations, setConfirmedReservation] = useState([])
+    const [confirmedResrvations, setConfirmedReservation] = useState([]);
     const [date, setDate] = useState("");
     const [groupSize, setGroupSize] = useState(1);
     const [occasion, setOccasion] = useState("");
@@ -27,7 +27,7 @@ const ReservationProvider = ({children}) => {
     )
 
     return (
-        <ReservationContext.Provider value={{date, setDate, groupSize, setGroupSize, occasion, setOccasion, time, setTime, firstName, setFirstName, lastName, setLastName, phone, setPhone, email, setEmail, terms, setTerms, reservation, setReservation}}>
+        <ReservationContext.Provider value={{date, setDate, groupSize, setGroupSize, occasion, setOccasion, time, setTime, firstName, setFirstName, lastName, setLastName, phone, setPhone, email, setEmail, terms, setTerms, reservation, setReservation, confirmedResrvations, setConfirmedReservation}}>
             {children}
         </ReservationContext.Provider>
     )

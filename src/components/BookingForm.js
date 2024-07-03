@@ -1,5 +1,5 @@
-import React, {useState, useContext} from 'react';
-import {useLocation, useNavigate} from 'react-router-dom';
+import React, {useState, useContext, useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
 import Button from './Button';
 import styled from 'styled-components';
 import ErrorMessage from './ErrorMessage';
@@ -7,45 +7,57 @@ import ReservationContext from '../ReservationContext';
 
 const BookingForm = () => {
     const {date, setDate, groupSize, setGroupSize, occasion, setOccasion, time, setTime, reservation, setReservation} = useContext(ReservationContext);
-    const location = useLocation();
+    const [dateError, setDateError] = useState(false);
+    const [occasionError, setOccasionError] = useState(false);
+    const [timeError, setTimeError] = useState(false);
     const navigate = useNavigate();
 
-    const handleDetails = (e) => {
-        setReservation({...reservation, date: date, groupSize: groupSize, occasion: occasion, time: time})
-        navigate("/reserve-a-table/confirmation");
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        date === "" ? setDateError(true) : setDateError(false);
+        occasion === "" ? setOccasionError(true) : setOccasionError(false);
+        time === "" ? setTimeError(true) : setTimeError(false);
+        setReservation({...reservation, date: date, groupSize: groupSize, occasion: occasion, time: time});
+        if(date && occasion && time){
+            navigate("/reserve-a-table/confirmation");
+        }else {
+            console.log("Error: Missing form inputs.");
+        }
     }
 
     return (
-        <ReservationDetails onSubmit={handleDetails}>
-            <ErrorMessage />
+        <ReservationDetails onSubmit={handleSubmit} >
             <FormSections>
                 <InputLabels htmlFor="resDateInput">DATE:</InputLabels>
-                <DateInput type="date" id="resDateInput" min="2024-06-22" max="2024-06-25" defaultValue={date} onChange={(e)=>setDate(e.target.value)} required />
+                <DateInput type="date" id="resDateInput" min="2024-07-03" max="2024-07-06" defaultValue={date} onChange={(e)=>setDate(e.target.value)} />
+                {dateError && <ErrorMessage message="Error: No date selected, please select a date." />}
             </FormSections>
             <FormSections>
                 <InputLabels htmlFor="occasionInput">OCCASION:</InputLabels>
-                <OccasionInput id="occasionInput" defaultValue="-- select an option --" onChange={(e)=>setOccasion(e.target.value)} required>
+                <OccasionInput id="occasionInput" defaultValue={occasion === "" ? "-- select an option --" : occasion} onChange={(e)=>setOccasion(e.target.value)} required>
                     <option hidden disabled>-- select an option --</option>
                     <option value="Casual" >Casual</option>
                     <option value="Birthday" >Birthday</option>
                     <option value="Anniversary" >Anniversary</option>
                 </OccasionInput>
+                {occasionError && <ErrorMessage message="Error: No occasion type selected, please select a occasion type." />}
             </FormSections>
             <FormSections>
                 <InputLabels htmlFor="peopleInput">NUMBER OF PEOPLE:</InputLabels>
-                <GroupInput type="number" min="1" max="10" id="peopleInput" defaultValue={groupSize} onChange={(e)=>setGroupSize(e.target.defaultValue)} required/>
+                <GroupInput type="number" min="1" max="10" id="peopleInput" defaultValue={groupSize} onChange={(e)=>setGroupSize(e.target.defaultValue)} />
             </FormSections>
             <AvailableTimes>
                 <LabelForTimes>AVAILABLE RESERVATION TIMES:</LabelForTimes>
                 <TimeContainer>
-                    <ReservationTimes className="selectedTime" htmlFor="time1" ><SelectedTime type="radio" id="time1" name="reservationTime" value="4:30pm" onChange={(e)=>(setTime(e.target.value))} required/>4:30pm</ReservationTimes>
-                    <ReservationTimes className="selectedTime" htmlFor="time2" ><SelectedTime type="radio" id="time2" name="reservationTime" value="6:30pm" onChange={(e)=>(setTime(e.target.value))} />6:30pm</ReservationTimes>
-                    <ReservationTimes className="selectedTime" htmlFor="time3" ><SelectedTime type="radio" id="time3" name="reservationTime" value="7:00pm" onChange={(e)=>(setTime(e.target.value))} />7:00pm</ReservationTimes>
-                    <ReservationTimes className="selectedTime" htmlFor="time4" ><SelectedTime type="radio" id="time4" name="reservationTime" value="7:30pm" onChange={(e)=>(setTime(e.target.value))} />7:30pm</ReservationTimes>
-                    <ReservationTimes className="selectedTime" htmlFor="time5" ><SelectedTime type="radio" id="time5" name="reservationTime" value="8:00pm" onChange={(e)=>(setTime(e.target.value))} />8:00pm</ReservationTimes>
-                    <ReservationTimes className="selectedTime" htmlFor="time6" ><SelectedTime type="radio" id="time6" name="reservationTime" value="10:30pm" onChange={(e)=>(setTime(e.target.value))} />10:30pm</ReservationTimes>
+                    <ReservationTimes className="selectedTime" htmlFor="time1" ><SelectedTime type="radio" id="time1" name="reservationTime" value="4:30pm" onChange={(e)=>(setTime(e.target.value))} checked={time === "4:30pm"} />4:30pm</ReservationTimes>
+                    <ReservationTimes className="selectedTime" htmlFor="time2" ><SelectedTime type="radio" id="time2" name="reservationTime" value="6:30pm" onChange={(e)=>(setTime(e.target.value))} checked={time === "6:30pm"} />6:30pm</ReservationTimes>
+                    <ReservationTimes className="selectedTime" htmlFor="time3" ><SelectedTime type="radio" id="time3" name="reservationTime" value="7:00pm" onChange={(e)=>(setTime(e.target.value))} checked={time === "7:00pm"} />7:00pm</ReservationTimes>
+                    <ReservationTimes className="selectedTime" htmlFor="time4" ><SelectedTime type="radio" id="time4" name="reservationTime" value="7:30pm" onChange={(e)=>(setTime(e.target.value))} checked={time === "7:30pm"} />7:30pm</ReservationTimes>
+                    <ReservationTimes className="selectedTime" htmlFor="time5" ><SelectedTime type="radio" id="time5" name="reservationTime" value="8:00pm" onChange={(e)=>(setTime(e.target.value))} checked={time === "8:00pm"} />8:00pm</ReservationTimes>
+                    <ReservationTimes className="selectedTime" htmlFor="time6" ><SelectedTime type="radio" id="time6" name="reservationTime" value="10:30pm" onChange={(e)=>(setTime(e.target.value))} checked={time === "10:30pm"} />10:30pm</ReservationTimes>
                 </TimeContainer>
             </AvailableTimes>
+            {timeError && <ErrorMessage message="Error: No reservation time selected, please select a reservation time." />}
             <ButtonContainer>
                 <Button type="submit" label="Next" />
             </ButtonContainer>
@@ -139,16 +151,11 @@ const ReservationTimes = styled.label`
     cusor: pointer;
     background-color: #EDEFEE;
 
-    $(SelectedTime):checked & {
-        background-color: #000;
-    }
 `
 
 const SelectedTime = styled.input`
     &:checked {
-        $(ReservationTimes) & {
-            background-color: #fff;
-        }
+        font-size: 2rem;
     }
 `
 

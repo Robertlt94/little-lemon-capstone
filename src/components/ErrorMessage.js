@@ -10,4 +10,7 @@ export default ErrorMessage;
 
 const Error = styled.p`
     font-size: 2rem;
+    background-color: #FF0000;
+    color: #fff;
+    padding: 1vh 2vw;
 `

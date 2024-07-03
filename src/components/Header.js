@@ -14,7 +14,10 @@ const Header = () => {
             {location.pathname === "/" ?
                 <DropDownMenu />
                 :
-                <BackButton />
+                location.pathname === "/thank-you" ?
+                    <></>
+                    :
+                    <BackButton />
             }
             {location.pathname === "/" && <CartIcon />}
         </Wrapper>
